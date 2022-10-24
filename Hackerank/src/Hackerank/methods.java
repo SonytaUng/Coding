@@ -1,0 +1,211 @@
+package Hackerank;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class methods {
+	public static void fizzBuzz(int n) {
+        for(int i = 1; i<=n ; i++){
+            if(i%3==0 && i%5==0){
+            System.out.println("FizzBuzz");
+        }
+        else if(i%3 == 0 && i%5 != 0){
+            System.out.println("Fizz");
+        }
+        else if(i%3 != 0 && i%5 == 0){
+            System.out.println("Buzz");
+        }
+        else{
+            System.out.println(i);
+        }    
+        }
+    }
+	
+	 /*
+     * Complete the 'diagonalDifference' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts 2D_INTEGER_ARRAY arr as parameter.
+     */
+
+    public static int diagonalDifference(List<List<Integer>> arr) {
+        int diff= 0;
+        int d1 = 0, d2 = 0, t = 0;
+        int s = 2147483647;
+        for (int i = 0; i < arr.size(); i++) {
+            if(s > arr.get(i).size()){
+                s = arr.get(i).size() - 1;
+            }
+            for (int j = 0; j < arr.get(j).size(); j++) {
+                d2 += arr.get(i).get(t++);
+                d1 += arr.get(i).get(s--);
+                break;
+            }
+        }
+        
+        diff=Math.abs(d1-d2);
+        return diff;
+    }
+    
+    /*
+     * Complete the 'countingSort' function below.
+     *
+     * The function is expected to return an INTEGER_ARRAY.
+     * The function accepts INTEGER_ARRAY arr as parameter.
+     */
+
+    public static List<Integer> countingSort(List<Integer> arr) {
+    // Write your code here
+
+        
+        int[] freq_array= new int[100];
+        Arrays.fill(freq_array,0);
+        for(Integer a:arr){
+            freq_array[a]++;
+        }
+        List<Integer> result=new ArrayList();
+        for(int i=0;i<freq_array.length;i++){
+            result.add(freq_array[i]);
+        }
+        return result;
+        
+        //works woth some test case, got some memory space issue
+        // List result = new ArrayList<>();
+        // int j = 0;
+        // int count = 0;
+        // while (j< arr.size()){
+        //     for(int i = 0; i< arr.size(); i++){
+        //         if(j == arr.get(i)){
+        //             count++;
+        //         }
+        //     }
+        //     result.add(count);
+        //     count = 0;
+        //     j++;
+        // }
+        // return result;
+
+    }
+    
+    /*
+     * Complete the 'flippingMatrix' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts 2D_INTEGER_ARRAY matrix as parameter.
+     */
+
+    public static int flippingMatrix(List<List<Integer>> matrix) {
+    // Write your code here
+        int sum = 0;
+        int n = matrix.get(0).size();
+        List<Integer> possibleSubstitutes = new ArrayList<>();
+        
+        for(int i = 0; i< n/2; i++){
+            for(int j = 0; j< n/2; j++){
+                possibleSubstitutes = Arrays.asList( 
+                    matrix.get(i).get(j), 
+                    matrix.get(n-i -1).get(j), 
+                    matrix.get(i).get(n-j-1), 
+                    matrix.get(n-1-i).get(n-1-j));
+                sum += possibleSubstitutes.stream().max(Integer::compare).get();   
+            }
+        }
+        return sum;
+    }
+    
+    /*
+     * Complete the 'minimumBribes' function below.
+     *
+     * The function accepts INTEGER_ARRAY q as parameter.
+     */
+
+    public static void minimumBribes(List<Integer> q) {
+    // Write your code here
+        int minBribes = 0;
+        Integer[] arr = new Integer[q.size()];
+        arr = q.toArray(arr);
+        for (int i=0; i<q.size(); i++){
+            if (q.get(i) > i){
+                if((q.get(i)-1)-i > 2){
+                    System.out.println("Too chaotic");
+                    return;
+                }
+            }
+        }
+        for (int i = arr.length - 4; i >= 0; i--) {
+            for (int j = i; j <= i + 2; j++) {
+                if (arr[j] > arr[j+1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
+                    minBribes++;
+                } 
+            }
+        }
+        System.out.println(minBribes);
+    }
+    
+    /*
+     * Complete the 'gridChallenge' function below.
+     *
+     * The function is expected to return a STRING.
+     * The function accepts STRING_ARRAY grid as parameter.
+     */
+
+    public static String gridChallenge(List<String> grid) {
+        // Write your code here
+            for (int i = 0; i < grid.size(); i++) {
+                char[] chArr = grid.get(i).toCharArray();
+                Arrays.sort(chArr);
+                grid.set(i, new String(chArr));
+            }
+            for (int i = 0; i < grid.get(0).length(); i++) {
+                for (int j = 0; j < grid.size()-1; j++) {
+                    if (grid.get(j).charAt(i) > grid.get(j+1).charAt(i)) {
+                        return "NO";
+                    }
+                }
+            }
+            return "YES";
+        }
+    
+    /*
+     * Complete the 'superDigit' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts following parameters:
+     *  1. STRING n
+     *  2. INTEGER k
+     */
+
+    public static int superDigit(String n, int k) {
+    // Write your code here
+        int sum = 0;
+        int result;
+        String temp = "";
+        int count = 0;
+        if( k == 1){
+            return Integer.parseInt(n);
+        }
+        if(n.length() <= 1) {
+            return Integer.parseInt(n);
+        }
+        for(int i = 0; i < n.length(); i++){
+            sum +=  Integer.valueOf(n.charAt(i)) - 
+                    Integer.valueOf('0');
+            // sum += n.charAt(i) - '0';
+        }
+        if(sum < 10){
+            return sum;
+        }
+        temp += sum;
+        result = superDigit(temp, k--);
+        return result;
+    }
+    
+    
+    
+
+}
+

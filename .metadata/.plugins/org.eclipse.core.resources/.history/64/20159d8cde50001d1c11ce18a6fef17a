@@ -1,0 +1,52 @@
+package Hackerank;
+
+import java.util.List;
+
+public class methods {
+	public static void fizzBuzz(int n) {
+        for(int i = 1; i<=n ; i++){
+            if(i%3==0 && i%5==0){
+            System.out.println("FizzBuzz");
+        }
+        else if(i%3 == 0 && i%5 != 0){
+            System.out.println("Fizz");
+        }
+        else if(i%3 != 0 && i%5 == 0){
+            System.out.println("Buzz");
+        }
+        else{
+            System.out.println(i);
+        }    
+        }
+    }
+	
+	 /*
+     * Complete the 'diagonalDifference' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts 2D_INTEGER_ARRAY arr as parameter.
+     */
+
+    public static int diagonalDifference(List<List<Integer>> arr) {
+        int diff= 0;
+        int d1 = 0, d2 = 0, t = 0;
+        int s = 2147483647;
+        for (int i = 0; i < arr.size(); i++) {
+            if(s > arr.get(i).size()){
+                s = arr.get(i).size() - 1;
+            }
+            for (int j = 0; j < arr.get(j).size(); j++) {
+                d2 += arr.get(i).get(t++);
+                d1 += arr.get(i).get(s--);
+                break;
+            }
+        }
+        
+        diff=Math.abs(d1-d2);
+        return diff;
+    }
+    
+
+}
+
+}
